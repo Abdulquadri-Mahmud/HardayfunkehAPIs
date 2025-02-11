@@ -35,12 +35,6 @@ const orderSchema = new mongoose.Schema({
   date: { 
     type: Date, default: Date.now()
   },
-  // totalPayment: { 
-  //   type: Number, required: true 
-  // },
-  // status: { 
-  //   type: String, required: true 
-  // },
   items: [
     {
       productID: { type: String, required: true },

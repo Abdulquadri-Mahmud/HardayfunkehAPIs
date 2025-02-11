@@ -33,7 +33,7 @@ const corsOptions = {
     }
 },
     credentials: true,  // Allow cookies if needed
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allow these HTTP methods
+    methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"], // Allow these HTTP methods
     allowedHeaders: ["Content-Type", "Authorization"], // Allow specific headers
 };
   
