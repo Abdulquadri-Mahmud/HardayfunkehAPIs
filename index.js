@@ -15,7 +15,6 @@ dotenv.config()
 const app = express();
 
 app.use(express.json());
-app.use(cors());
 app.use(cookieParser());
 
 const allowedOrigins = [
@@ -33,7 +32,7 @@ const corsOptions = {
         callback(new Error('Not allowed by CORS')); // Deny access
     }
 },
-    // credentials: true, // Allow cookies and credentials if needed
+    credentials: true, // Allow cookies and credentials if needed
 };
   
 // Apply CORS middleware
