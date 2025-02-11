@@ -143,7 +143,7 @@ export const allUsers = async (req, res, next) => {
     try {
         const excludePassword = {password : 0};
 
-        const getUsers = await User.find({}, {excludePassword});
+        const getUsers = await User.find({}, {excludePassword}).sort({createdAt: - 1});
 
         // .sort({createdAt : -1});
         
