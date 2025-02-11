@@ -32,7 +32,9 @@ const corsOptions = {
         callback(new Error('Not allowed by CORS')); // Deny access
     }
 },
-    credentials: true, // Allow cookies and credentials if needed
+    credentials: true,  // Allow cookies if needed
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allow these HTTP methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Allow specific headers
 };
   
 // Apply CORS middleware
