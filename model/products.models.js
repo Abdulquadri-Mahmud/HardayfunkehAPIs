@@ -52,7 +52,7 @@ var productsSchema = new mongoose.Schema({
     },
     size: {
         type:[],
-        required: true
+        // required: true
     },
     gender: {
         type:String,
