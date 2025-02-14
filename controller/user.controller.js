@@ -138,6 +138,24 @@ export const deleteAccount = async (req, res, next) => {
     }
 }
 
+export const singleUser = async (req, res, next) => {
+    const id = req.params.id;
+
+    try {
+        const findUser = await User.findById(id);
+    
+        if (!findUser) {
+            next(errorHandler(404, 'Account not found'));
+            return;
+        }
+    
+        res.status(200).json(findUser);
+        
+    } catch (error) {
+        next(errorHandler(404, error));
+    }
+}
+
 export const allUsers = async (req, res, next) => {
     
     try {
