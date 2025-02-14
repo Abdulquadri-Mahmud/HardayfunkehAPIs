@@ -22,7 +22,7 @@ export const sendContactEmail = async (req, res, next) => {
         });
 
         const mailOptions = {
-            from: `"Hardayfunkeh Website" <${email}>`,
+            from: `"Hardayfunkeh Website" <${process.env.EMAIL}>`,
             to: process.env.EMAIL,
             subject: "📩 New Message from Hardayfunkeh Website",
             html: `
