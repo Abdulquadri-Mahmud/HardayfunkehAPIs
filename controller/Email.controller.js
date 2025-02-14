@@ -23,7 +23,8 @@ export const sendContactEmail = async (req, res, next) => {
 
         const mailOptions = {
             from: `"Hardayfunkeh Website" <${process.env.EMAIL}>`,
-            to: process.env.EMAIL,
+            to: process.env.EMAIL,  // You receive the email
+            replyTo: email,  // When replying, it goes to the user
             subject: "📩 New Message from Hardayfunkeh Website",
             html: `
                 <div style="font-family: 'Arial', sans-serif; max-width: 600px; margin: auto; padding: 20px; background: #fff; border: 1px solid #ddd; border-radius: 10px;">
