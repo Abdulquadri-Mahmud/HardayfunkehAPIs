@@ -1,5 +1,5 @@
 import express from 'express';
-import { searchProducts } from '../controller/product.search.controller';
+import { searchProducts } from '../controller/product.search.controller.js';
 
 const app = express();
 
