@@ -3,7 +3,11 @@ import Products from "../model/products.models.js"; // Adjust the path based on 
 // Search Products by name, category, description, or price range
 export const searchProducts = async (req, res) => {
   try {
-    const { query, minPrice, maxPrice } = req.query; // Get search parameters from request
+    const { query, minPrice, maxPrice, deal, gender, discount } = req.query; // Get search parameters from request
+
+    if (!query && !minPrice && !maxPrice && !deal && !gender && !discount) {
+        return res.status(400).json({ message: "At least one search filter is required" });
+    }
 
     // Define search conditions
     let searchConditions = {};
@@ -20,6 +24,19 @@ export const searchProducts = async (req, res) => {
       searchConditions.price = {};
       if (minPrice) searchConditions.price.$gte = parseFloat(minPrice);
       if (maxPrice) searchConditions.price.$lte = parseFloat(maxPrice);
+    }
+
+    // Filter by Deals (Assuming "deals" is a boolean field)
+    if (deal === "good" || deal === "great") {
+        searchConditions.deal = deal;
+    }
+
+    if (gender) {
+        searchConditions.gender = { $in: [gender, gender.toLowerCase(), gender.toUpperCase()] };
+    }
+
+    if (discount) {
+        searchConditions.discount = { $gte: parseInt(discount) };
     }
 
     // Fetch products matching conditions
