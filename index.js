@@ -8,6 +8,7 @@ import userAuthentication from './routes/user.routes.js';
 import adminAuthentication from './routes/admin.routes.js';
 import orderRoutes from './routes/order.routes.js';
 import sendEmail from './routes/email.routes.js';
+import searchRoutes  from './routes/products.search.routes.js';
 
 import cookieParser from 'cookie-parser';
 
@@ -59,6 +60,7 @@ app.use('/api/user/auth', userAuthentication);
 app.use('/api/admin/auth', adminAuthentication);
 app.use('/api/order', orderRoutes);
 app.use('/api/email', sendEmail);
+app.use('/api/product', searchRoutes);
 
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;
