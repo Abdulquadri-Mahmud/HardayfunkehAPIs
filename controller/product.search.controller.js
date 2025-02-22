@@ -38,21 +38,18 @@ export const searchProducts = async (req, res) => {
     }
 
     // ✅ Filter by Discount (Ensure it's a number)
-    // if (discount) {
-    //   const discountValue = parseInt(discount);
-    //   if (!isNaN(discountValue)) {
-    //     searchConditions.discount = { $gte: discountValue };
-    //   }
-    // }
+    if (discount) {
+      const discountValue = parseInt(discount);
+      if (!isNaN(discountValue)) {
+        searchConditions.discount = { $gte: discountValue };
+      }
+    }
 
     // ✅ Filter by Size (Strict Exact Match in Array)
-    // if (size) {
-    //   const sizeArray = size.split(",").map((s) => s.trim()); // Convert string to array
-    //   searchConditions.size = { $in: [size.toUpperCase()] };
-    //   // searchConditions.size = sizeArray; // Ensures exact match within array
-    //   console.log(searchConditions.size);
-      
-    // }
+    if (size) {
+      const sizeArray = size.split(",").map(s => s.trim().toUpperCase()); // Support multiple sizes
+      searchConditions.size = { $in: sizeArray };
+    }
 
     // ✅ Convert `order` to `1` (asc) or `-1` (desc)
     const sortOrder = order.toLowerCase() === "asc" ? 1 : -1;
