@@ -1,17 +1,17 @@
-import Products from "../model/products.models.js"; // Adjust path as needed
+import Products from "../model/products.models.js"; // Adjust the path based on your project structure
 
+// Search Products by name, category, description, or price range
 export const searchProducts = async (req, res) => {
   try {
-    const { query, minPrice, maxPrice, deal, gender, discount, size, sort = "createdAt", order = "desc" } = req.query;
+    const { query, minPrice, maxPrice, deal, gender, discount } = req.query; // Get search parameters from request
 
-    if (!query && !minPrice && !maxPrice && !deal && !gender && !discount && !size) {
-      return res.status(400).json({ message: "At least one search filter is required" });
+    if (!query && !minPrice && !maxPrice && !deal && !gender && !discount) {
+        return res.status(400).json({ message: "At least one search filter is required" });
     }
 
     // Define search conditions
     let searchConditions = {};
-
-    // ✅ Search by query (name, category, description)
+ 
     if (query) {
       searchConditions.$or = [
         { name: { $regex: query, $options: "i" } },
@@ -20,42 +20,27 @@ export const searchProducts = async (req, res) => {
       ];
     }
 
-    // ✅ Filter by Gender
-    if (gender) {
-      searchConditions.gender = new RegExp(`^${gender}$`, "i"); // Case-insensitive exact match
-    }
-
-    // ✅ Filter by price range
     if (minPrice || maxPrice) {
       searchConditions.price = {};
       if (minPrice) searchConditions.price.$gte = parseFloat(minPrice);
       if (maxPrice) searchConditions.price.$lte = parseFloat(maxPrice);
     }
 
-    // ✅ Filter by Deals
-    if (deal) {
-      searchConditions.deal = deal;
+    // Filter by Deals (Assuming "deals" is a boolean field)
+    if (deal === "good" || deal === "great") {
+        searchConditions.deal = deal;
     }
 
-    // ✅ Filter by Discount (Ensure it's a number)
-    if (discount) {
-      const discountValue = parseInt(discount);
-      if (!isNaN(discountValue)) {
-        searchConditions.discount = { $gte: discountValue };
-      }
-    }
+    // if (gender) {
+    //     searchConditions.gender = { $in: [gender, gender.toLowerCase(), gender.toUpperCase()] };
+    // }
 
-    // ✅ Filter by Size (Strict Exact Match in Array)
-    if (size) {
-      const sizeArray = size.split(",").map(s => s.trim().toUpperCase()); // Support multiple sizes
-      searchConditions.size = { $in: sizeArray };
-    }
+    // if (discount) {
+    //     searchConditions.discount = { $gte: parseInt(discount) };
+    // }
 
-    // ✅ Convert `order` to `1` (asc) or `-1` (desc)
-    const sortOrder = order.toLowerCase() === "asc" ? 1 : -1;
-
-    // Fetch products matching conditions and sort
-    const products = await Products.find(searchConditions).sort({ [sort]: sortOrder });
+    // Fetch products matching conditions
+    const products = await Products.find(searchConditions);
 
     res.status(200).json(products);
   } catch (error) {
