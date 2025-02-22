@@ -17,11 +17,10 @@ dotenv.config()
 const app = express();
 
 app.use(express.json());
-app.use(cors());
 app.use(cookieParser());
 
 const allowedOrigins = [
-    'https://hardayfunkeh-online-shopping.vercel.app',
+    // 'https://hardayfunkeh-online-shopping.vercel.app',
     'http://localhost:5173',
 ];
 
@@ -35,7 +34,9 @@ const corsOptions = {
         callback(new Error('Not allowed by CORS')); // Deny access
     }
 },
-    // credentials: true, // Allow cookies and credentials if needed
+    credentials: true,  // Allow cookies if needed
+    methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"], // Allow these HTTP methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Allow specific headers
 };
   
 // Apply CORS middleware
