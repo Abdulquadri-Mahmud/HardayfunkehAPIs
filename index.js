@@ -27,19 +27,17 @@ const allowedOrigins = [
 // 'http://localhost:5174', 
 // Configure CORS middleware
 const corsOptions = {
-    origin: function (origin, callback) {
+    origin: (origin, callback) => {
         if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            console.log("Blocked by CORS:", origin); // Debugging log
-            callback(new Error("Not allowed by CORS"));
-        }
-    },
-    credentials: true,
-    methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+        callback(null, true); // Allow access
+    } else {
+        callback(new Error('Not allowed by CORS')); // Deny access
+    }
+},
+    credentials: true,  // Allow cookies if needed
+    methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"], // Allow these HTTP methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Allow specific headers
 };
-
   
 // Apply CORS middleware
 app.use(cors(corsOptions));
