@@ -21,8 +21,8 @@ app.use(cookieParser());
 
 const allowedOrigins = [
     'http://localhost:5173',
+    'https://hardayfunkeh-online-shopping.vercel.app',
 ];
-// 'https://hardayfunkeh-online-shopping.vercel.app',
 // 'http://localhost:5174', 
 // Configure CORS middleware
 const corsOptions = {
