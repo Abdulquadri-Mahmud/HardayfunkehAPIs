@@ -169,7 +169,7 @@ export const deleteOrder = async (req, res, next) => {
 
 export const allOrders = async (req, res, next) => {
     try {
-        const orders = await Order.find({}).sort({createdAt: 1});
+        const orders = await Order.find({}).sort({createdAt: -1});
 
         res.status(200).json(orders);
 
